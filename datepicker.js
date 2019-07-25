@@ -12,11 +12,13 @@ import {
   Platform,
   Animated,
   Keyboard,
+  Dimensions,
   PixelRatio
+ 
 } from 'react-native';
 import Style from './style';
 import Moment from 'moment';
-
+import DeviceInfo from 'react-native-device-info';
 
 const FORMATS = {
   'date': 'YYYY-MM-DD',
@@ -58,8 +60,15 @@ class DatePicker extends Component {
     }
   }
   setSpText= (number)=> {
-    // return number * (1.0/PixelRatio.getFontScale());
-    return number;
+    if (Platform.OS=='ios') {
+      const scale = Math.min(Dimensions.get('window').height / 667, Dimensions.get('window').width / 375);
+
+      number = Math.round((number * scale + 0.5) * PixelRatio.get() / PixelRatio.getFontScale());
+      return number / PixelRatio.get();
+  }else{
+
+      return number;
+  }
 }
   setModalVisible(visible) {
     const {height, duration} = this.props;
@@ -177,13 +186,13 @@ class DatePicker extends Component {
 
     if (!date && placeholder) {
       return (
-        <Text allowFontScaling={allowFontScaling} style={[Style.placeholderText,{fontSize:this.setSpText(16),color:'#BBBBBB'}, customStyles.placeholderText]}>
+        <Text allowFontScaling={allowFontScaling} style={[Style.placeholderText, customStyles.placeholderText,{fontSize:this.setSpText(16),color:'#BBBBBB'}]}>
           {placeholder}
         </Text>
       );
     }
     return (
-      <Text allowFontScaling={allowFontScaling} style={[Style.dateText,{fontSize:this.setSpText(16)}, customStyles.dateText]}>
+      <Text allowFontScaling={allowFontScaling} style={[Style.dateText, customStyles.dateText,{fontSize:this.setSpText(16)}]}>
         {this.getDateStr()}
       </Text>
     );
