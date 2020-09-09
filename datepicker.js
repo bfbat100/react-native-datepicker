@@ -186,13 +186,13 @@ class DatePicker extends Component {
 
     if (!date && placeholder) {
       return (
-        <Text allowFontScaling={allowFontScaling} style={[Style.placeholderText, customStyles.placeholderText,{fontSize:this.setSpText(16),color:'#BBBBBB'}]}>
+        <Text allowFontScaling={allowFontScaling} style={[Style.placeholderText,{fontSize:this.setSpText(16),color:'#BBBBBB'}, customStyles.placeholderText]}>
           {placeholder}
         </Text>
       );
     }
     return (
-      <Text allowFontScaling={allowFontScaling} style={[Style.dateText, customStyles.dateText,{fontSize:this.setSpText(16)}]}>
+      <Text allowFontScaling={allowFontScaling} style={[Style.dateText,{fontSize:this.setSpText(16)}, customStyles.dateText]}>
         {this.getDateStr()}
       </Text>
     );
